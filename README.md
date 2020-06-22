@@ -14,55 +14,103 @@ implied.
 See the License for the specific language governing permissions and
 limitations under the License
 -->
-# Project Title
 
-One Paragraph of project description goes here
+# OSM test automation project - osm/tests
 
-## Getting Started
+This repository contains tools and configuration files for testing and automation needs of OSM projet
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+## Prerequisites
 
-### Prerequisites
+* **Robot Framework**
+* **Packages**: ssh ping yq git
+* **Python3 packages**: haikunator requests robotframework robotframework-seleniumlibrary robotframework-requests robotframework-jsonlibrary robotframework-sshlibrary
+* Clone **osm-packages** from gitlab
+* Environment config file for your infrastructure [envfile.rc]
 
-What things you need to install the software and how to install them
+## Installing
 
-```
-Give examples
-```
+This bash script can be used to setup your environment to execute the tests.
 
-### Installing
-
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
+```bash
+   PACKAGES_FOLDER=osm-packages
+   add-apt-repository -y ppa:rmescandon/yq && apt update && apt install yq git iputils-ping ssh -y
+   pip install haikunator requests robotframework robotframework-seleniumlibrary robotframework-requests robotframework-jsonlibrary \
+      robotframework-sshlibrary
+   # Download community packages
+   git clone https://osm.etsi.org/gitlab/vnf-onboarding/osm-packages.git ${PACKAGES_FOLDER}
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+envfile.rc
 
-## Running the tests
+```bash
+   # VIM setup
+   OS_USERNAME=<openstack_username>
+   OS_PASSWORD=<openstack_password>
+   OS_TENANT_NAME=<openstack_tenant_name>
+   OS_AUTH_URL=<openstack_authorization_url>
+   OS_TENANT_ID=<openstack_tenant_id>
+   OSM_HOSTNAME=<osm_ip_address>
+   VIM_TARGET=<osm_vim_name>
+   VIM_MGMT_NET=<osm_vim_mgmt_name>
 
-Explain how to run the automated tests for this system
+   # The following set of environment variables will be used in host
+   # of the robot framework. Not needed for docker execution
 
-```
-Give an example
+   # Folder where Robot tests are stored
+   ROBOT_DEVOPS_FOLDER=robot-systest
+
+   # Folder to save alternative DUT environments (optional)
+   ENVIRONMENTS_FOLDER=environments
+
+   # Folder where all required packages are stored
+   PACKAGES_FOLDER=osm-packages
+
+   # Folder where test results should be exported
+   ROBOT_REPORT_FOLDER=results
 ```
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+It is possible to run the tests directly from the repository or using a docker container with the tests
+
+1. Docker container creation:
+
+```bash
+docker build -t osmtests .
+```
+
+Options:
+
+* --env-file: It is the environmental file where is described the OSM target and VIM
+* -o <osmclient_version> [OPTIONAL]: It is used to specify a particular osmclient version. Default: latest
+* -p <package_branch> [OPTIONAL]: OSM packages repository branch. Default: master
+* -t <testing_tags> [OPTIONAL]: Robot tests tags. [sanity, regression, particular_test]. Default: sanity
+
+Volumes:
+
+* <path_to_reports> [OPTIONAL]: It is the absolute path to reports location in the host
+* <path_to_clouds.yaml> [OPTIONAL]: It is the absolute path to the clouds.yaml file in the host
+
+```bash
+   docker run --rm=true -t osmtests --env-file <env_file> \
+       -v <path_to_reports>:/reports osmtests -v <path_to_clouds.yaml>:/robot-systest/clouds.yaml \
+       -v <path_to_kubeconfig>:/robot-systest/kubeconfig.yaml
+       -o <osmclient_version> -p <package_branch> -t <testing_tags>
+```
+
+1. Running the tests manually:
+
+The way of executing the tests is via the following command:
+
+```bash
+   source envfile.rc
+   robot -d reports -i <testing_tags> testsuite/
+```
 
 ## Built With
 
 * [Python](www.python.org/) - The language used
+* [Robot Framework](robotframework.org) - The testing framework
 
 ## Contributing
 
@@ -70,13 +118,10 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduc
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://osm.etsi.org/gitweb/?p=osm/TEMPLATE.git;a=tags).
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://osm.etsi.org/gitweb/?p=osm/tests.git;a=tags).
 
 ## License
 
 This project is licensed under the Apache2 License - see the [LICENSE.md](LICENSE) file for details
 
 ## Acknowledgments
-
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-

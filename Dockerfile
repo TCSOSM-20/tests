@@ -15,5 +15,30 @@
 
 FROM ubuntu:18.04
 
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y install git \
-    make python3 debhelper python3-setuptools apt-utils
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y install git software-properties-common \
+    make python3 debhelper python3-setuptools python3-pip apt-utils ssh iputils-ping libcurl4-openssl-dev libssl-dev \
+    python3-openstackclient
+RUN add-apt-repository -y ppa:rmescandon/yq && apt update && apt install yq -y 
+RUN python3 -m pip install haikunator requests robotframework robotframework-seleniumlibrary robotframework-requests robotframework-jsonlibrary \
+        robotframework-sshlibrary charm-tools git+https://osm.etsi.org/gerrit/osm/IM.git git+https://osm.etsi.org/gerrit/osm/osmclient.git
+WORKDIR /robot-systest
+RUN git clone https://osm.etsi.org/gitlab/vnf-onboarding/osm-packages.git --recurse-submodules /robot-systest/osm-packages
+COPY robot-systest /robot-systest
+COPY charm.sh /usr/sbin/charm
+
+# Folder where Robot tests are stored
+ENV ROBOT_DEVOPS_FOLDER=/robot-systest
+
+# Folder to save alternative DUT environments (optional)
+ENV ENVIRONMENTS_FOLDER=environments
+
+# Folder where all required packages are stored
+ENV PACKAGES_FOLDER=/robot-systest/osm-packages
+
+# Folder where test results should be exported
+ENV ROBOT_REPORT_FOLDER=/robot-systest/results
+
+ENV LC_ALL=C.UTF-8
+ENV LANG=C.UTF-8
+
+ENTRYPOINT [ "/robot-systest/run_test.sh"]
