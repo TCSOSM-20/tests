@@ -1,9 +1,0 @@
-clouds:
-  openstack:
-    auth:
-      auth_url: http://172.21.247.1:5000/v3
-      project_name: fvicens
-      username: fvicens
-      password: fvicens19
-      user_domain_name: Default
-      project_domain_name: Default

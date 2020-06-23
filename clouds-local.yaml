@@ -1,0 +1,9 @@
+clouds:
+  openstack:
+    auth:
+      auth_url:
+      project_name:
+      username:
+      password:
+      user_domain_name:
+      project_domain_name:

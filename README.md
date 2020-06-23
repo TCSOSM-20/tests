@@ -36,6 +36,7 @@ This bash script can be used to setup your environment to execute the tests.
    add-apt-repository -y ppa:rmescandon/yq && apt update && apt install yq git iputils-ping ssh -y
    pip install haikunator requests robotframework robotframework-seleniumlibrary robotframework-requests robotframework-jsonlibrary \
       robotframework-sshlibrary
+   snap install charm
    # Download community packages
    git clone https://osm.etsi.org/gitlab/vnf-onboarding/osm-packages.git ${PACKAGES_FOLDER}
 ```
@@ -43,15 +44,23 @@ This bash script can be used to setup your environment to execute the tests.
 envfile.rc
 
 ```bash
-   # VIM setup
+   # VIM Setup
    OS_USERNAME=<openstack_username>
    OS_PASSWORD=<openstack_password>
    OS_TENANT_NAME=<openstack_tenant_name>
    OS_AUTH_URL=<openstack_authorization_url>
    OS_TENANT_ID=<openstack_tenant_id>
+
+   # OSM Setup
    OSM_HOSTNAME=<osm_ip_address>
    VIM_TARGET=<osm_vim_name>
    VIM_MGMT_NET=<osm_vim_mgmt_name>
+
+   # Clouds file datacenter
+   OS_CLOUD=<datacenter_in_clouds_file>
+
+   # K8S config file
+   K8S_CREDENTIALS=<path_to_kubeconfig>
 
    # The following set of environment variables will be used in host
    # of the robot framework. Not needed for docker execution
@@ -90,12 +99,16 @@ Volumes:
 
 * <path_to_reports> [OPTIONAL]: It is the absolute path to reports location in the host
 * <path_to_clouds.yaml> [OPTIONAL]: It is the absolute path to the clouds.yaml file in the host
+* <path_to_kubeconfig> [OPTIONAL]: It is the kubeconfig file to be used for k8s clusters
 
 ```bash
    docker run --rm=true -t osmtests --env-file <env_file> \
-       -v <path_to_reports>:/reports osmtests -v <path_to_clouds.yaml>:/robot-systest/clouds.yaml \
-       -v <path_to_kubeconfig>:/robot-systest/kubeconfig.yaml
-       -o <osmclient_version> -p <package_branch> -t <testing_tags>
+       -v <path_to_reports>:/reports osmtests \
+       -v <path_to_clouds.yaml>:/robot-systest/clouds.yaml \
+       -v <path_to_kubeconfig>:/root/.kube/config \
+       -o <osmclient_version> \
+       -p <package_branch> \
+       -t <testing_tags>
 ```
 
 1. Running the tests manually:

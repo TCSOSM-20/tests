@@ -53,9 +53,12 @@ while (( "$#" )); do
 
 Usage:
         docker run --rm=true -t osmtests --env-file <env_file> \\
-            -v <path_to_reports>:/reports osmtests -v <path_to_clouds.yaml>:/robot-systest/clouds.yaml \\
-            -v <path_to_kubeconfig>:/robot-systest/kubeconfig.yaml \\
-            -o <osmclient_version> -p <package_branch> -t <testing_tags>
+            -v <path_to_reports>:/reports osmtests \\
+            -v <path_to_clouds.yaml>:/robot-systest/clouds.yaml \\
+            -v <path_to_kubeconfig>:/root/.kube/config \\
+            -o <osmclient_version> \\
+            -p <package_branch> \\
+            -t <testing_tags>
             
 Options:
         --env-file: It is the environmental file where is described the OSM target and VIM
@@ -65,7 +68,8 @@ Options:
 
 Volumes:
         <path_to_reports> [OPTIONAL]: It is the absolute path to reports location in the host
-        <path_to_clouds.yaml> [OPTIONAL]: It is the absolute path to the clouds.yaml file in the host"
+        <path_to_clouds.yaml> [OPTIONAL]: It is the absolute path to the clouds.yaml file in the host
+        <path_to_kubeconfig> [OPTIONAL]: It is the kubeconfig file to be used for k8s clusters"
 
             exit 0
             ;;

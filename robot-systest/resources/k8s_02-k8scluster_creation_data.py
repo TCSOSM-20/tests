@@ -1,3 +1,5 @@
+# Copyright 2020 Canonical Ltd.
+#
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
 #   You may obtain a copy of the License at
@@ -17,14 +19,6 @@ home = str(Path.home())
 # K8s cluster name
 k8scluster_name = 'k8s-test'
 k8scluster_version = 'v1'
-# NS and VNF descriptor package files
-vnfd_pkg = 'hackfest_simple_k8s_vnf'
-nsd_pkg = 'hackfest_simple_k8s_ns'
-# NS and VNF descriptor package files
-vnfd_name = 'hackfest-simple-k8s-vnf'
-nsd_name = 'hackfest-simple-k8s-ns'
-# NS instance name
-ns_name = 'simple-k8s'
 # SSH keys to be used
 publickey = home + '/.ssh/id_rsa.pub'
 privatekey = home + '/.ssh/id_rsa'
