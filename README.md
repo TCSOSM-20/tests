@@ -85,7 +85,7 @@ It is possible to run the tests directly from the repository or using a docker c
 1. Docker container creation:
 
 ```bash
-docker build -t osmtests .
+docker build -f docker/Dockerfile -t osmtests .
 ```
 
 Options:
