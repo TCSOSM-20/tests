@@ -45,7 +45,7 @@ ENV ENVIRONMENTS_FOLDER=environments
 ENV PACKAGES_FOLDER=/robot-systest/osm-packages
 
 # Folder where test results should be exported
-ENV ROBOT_REPORT_FOLDER=/robot-systest/results
+ENV ROBOT_REPORT_FOLDER=/robot-systest/reports
 
 # Kubeconfig file
 ENV K8S_CREDENTIALS=/root/.kube/config

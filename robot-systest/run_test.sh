@@ -70,7 +70,7 @@ Usage:
             -o <osmclient_version> \\
             -p <package_branch> \\
             -t <testing_tags>
-            
+
 Options:
         --env-file: It is the environmental file where is described the OSM target and VIM
         -o <osmclient_version> [OPTIONAL]: It is used to specify a particular osmclient version. Default: latest
@@ -98,13 +98,16 @@ done
 
 eval set -- "$PARAMS"
 
-if [[ -z $TEST ]]; then
+if [[ -n "$stackName" ]]; then
+    export OSM_HOSTNAME=osm${stackName}_nbi
+fi
+
+if [[ -z "${TEST}" ]]; then
     printf "Test not provided. \nRunning default test: sanity\n"
     TEST="sanity"
 fi
 
-
-if [[ -n "$TEST" ]]; then
+if [[ -n "${TEST}" ]]; then
     robot -d ${ROBOT_DEVOPS_FOLDER}/reports -i ${TEST} ${ROBOT_DEVOPS_FOLDER}/testsuite/
     exit 0
 else
