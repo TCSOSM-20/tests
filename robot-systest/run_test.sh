@@ -52,7 +52,7 @@ while (( "$#" )); do
             shift 2
             ;;
         -o|--osmclientversion)
-            OSMCLIENT=$2 install_osmclient
+            OSMCLIENT=$2 && install_osmclient
             shift 2
             ;;
         -c|--createvim)
@@ -98,8 +98,9 @@ done
 
 eval set -- "$PARAMS"
 
-if [[ -n "$stackName" ]]; then
-    export OSM_HOSTNAME=osm${stackName}_nbi
+if [[ -n "$BRANCH_NAME" ]]; then
+    PACKAGES=$BRANCH_NAME && download_packages
+    OSMCLIENT=$BRANCH_NAME && install_osmclient
 fi
 
 if [[ -z "${TEST}" ]]; then
