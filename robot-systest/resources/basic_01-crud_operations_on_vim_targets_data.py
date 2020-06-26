@@ -15,7 +15,10 @@ import yaml
 from pathlib import Path
 
 # Prometheus host and port
-prometheus_host = os.environ.get("OSM_HOSTNAME")
+if os.environ.get("PROMETHEUS_HOSTNAME", False):
+    prometheus_host = os.environ.get("PROMETHEUS_HOSTNAME")
+else:
+    prometheus_host = os.environ.get("OSM_HOSTNAME")
 prometheus_port = "9091"
 
 # VIM Configuration
