@@ -1,5 +1,3 @@
-# Copyright 2020 ETSI
-#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -13,35 +11,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM ubuntu:18.04
+# This Dockerfile is intented for devops and deb package generation
+#
+# Use Dockerfile.local for running osm/NBI in a docker container from source
+# Use Dockerfile.fromdeb for running osm/NBI in a docker container from last stable package
 
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y install git software-properties-common \
-    make python3 debhelper python3-setuptools python3-pip apt-utils ssh iputils-ping libcurl4-openssl-dev libssl-dev \
-    python3-openstackclient
-RUN add-apt-repository -y ppa:rmescandon/yq && apt update && apt install yq -y 
-RUN python3 -m pip install haikunator requests robotframework robotframework-seleniumlibrary robotframework-requests robotframework-jsonlibrary \
-        robotframework-sshlibrary charm-tools git+https://osm.etsi.org/gerrit/osm/IM.git git+https://osm.etsi.org/gerrit/osm/osmclient.git
-WORKDIR /robot-systest
-RUN git clone https://osm.etsi.org/gitlab/vnf-onboarding/osm-packages.git --recurse-submodules /robot-systest/osm-packages
-COPY robot-systest /robot-systest
-COPY charm.sh /usr/sbin/charm
 
-# Folder where Robot tests are stored
-ENV ROBOT_DEVOPS_FOLDER=/robot-systest
+FROM ubuntu:16.04
 
-# Folder to save alternative DUT environments (optional)
-ENV ENVIRONMENTS_FOLDER=environments
-
-# Folder where all required packages are stored
-ENV PACKAGES_FOLDER=/robot-systest/osm-packages
-
-# Folder where test results should be exported
-ENV ROBOT_REPORT_FOLDER=/robot-systest/results
-
-# Kubeconfig file
-ENV K8S_CREDENTIALS=/root/.kube/config
-
-ENV LC_ALL=C.UTF-8
-ENV LANG=C.UTF-8
-
-ENTRYPOINT [ "/robot-systest/run_test.sh"]
+RUN apt-get update && apt-get -y install git make libcurl4-gnutls-dev \
+    libgnutls-dev debhelper apt-utils dh-make

@@ -32,6 +32,13 @@ download_packages(){
         git checkout ${PACKAGES})
 }
 
+create_vim(){
+    echo -e "\nCreating VIM ${VIM_TARGET}"
+    osm vim-create --name ${VIM_TARGET} --user ${OS_USERNAME} --password ${OS_PASSWORD} --tenant ${OS_PROJECT_NAME} \
+                   --auth_url ${OS_AUTH_URL} --account_type openstack --description vim \
+                   --config "{management_network_name: ${VIM_MGMT_NET}}" || true
+}
+
 PARAMS=""
 
 while (( "$#" )); do
@@ -45,8 +52,12 @@ while (( "$#" )); do
             shift 2
             ;;
         -o|--osmclientversion)
-            OSMCLIENT=$2 install_osmclient
+            OSMCLIENT=$2 && install_osmclient
             shift 2
+            ;;
+        -c|--createvim)
+            create_vim
+            shift 1
             ;;
         -h|--help)
             echo "OSM TESTS TOOL
@@ -59,12 +70,13 @@ Usage:
             -o <osmclient_version> \\
             -p <package_branch> \\
             -t <testing_tags>
-            
+
 Options:
         --env-file: It is the environmental file where is described the OSM target and VIM
         -o <osmclient_version> [OPTIONAL]: It is used to specify a particular osmclient version. Default: latest
         -p <package_branch> [OPTIONAL]: OSM packages repository branch. Default: master
         -t <testing_tags> [OPTIONAL]: Robot tests tags. [sanity, regression, particular_test]. Default: sanity
+        -c To create a VIM for the tests
 
 Volumes:
         <path_to_reports> [OPTIONAL]: It is the absolute path to reports location in the host
@@ -86,13 +98,17 @@ done
 
 eval set -- "$PARAMS"
 
-if [[ -z $TEST ]]; then
+if [[ -n "$BRANCH_NAME" ]]; then
+    PACKAGES=$BRANCH_NAME && download_packages
+    OSMCLIENT=$BRANCH_NAME && install_osmclient
+fi
+
+if [[ -z "${TEST}" ]]; then
     printf "Test not provided. \nRunning default test: sanity\n"
     TEST="sanity"
 fi
 
-
-if [[ -n "$TEST" ]]; then
+if [[ -n "${TEST}" ]]; then
     robot -d ${ROBOT_DEVOPS_FOLDER}/reports -i ${TEST} ${ROBOT_DEVOPS_FOLDER}/testsuite/
     exit 0
 else

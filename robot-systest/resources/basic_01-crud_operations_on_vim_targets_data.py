@@ -15,8 +15,12 @@ import yaml
 from pathlib import Path
 
 # Prometheus host and port
-prometheus_host = os.environ.get("OSM_HOSTNAME")
-prometheus_port = "9091"
+if os.environ.get("PROMETHEUS_HOSTNAME", False):
+    prometheus_host = os.environ.get("PROMETHEUS_HOSTNAME")
+    prometheus_port = "9090"
+else:
+    prometheus_host = os.environ.get("OSM_HOSTNAME")
+    prometheus_port = "9091"
 
 # VIM Configuration
 vim_account_type = "openstack"
