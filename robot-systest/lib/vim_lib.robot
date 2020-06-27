@@ -24,7 +24,7 @@ Resource   %{ROBOT_DEVOPS_FOLDER}/lib/prometheus_lib.robot
 ${success_return_code}   0
 ${delete_max_wait_time}   1min
 ${delete_pol_time}   15sec
-${vim_status_max_wait_time}   1min
+${vim_status_max_wait_time}   2min
 ${vim_status_pol_time}   15sec
 
 
