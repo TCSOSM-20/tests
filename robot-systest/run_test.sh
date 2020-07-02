@@ -36,7 +36,19 @@ create_vim(){
     echo -e "\nCreating VIM ${VIM_TARGET}"
     osm vim-create --name ${VIM_TARGET} --user ${OS_USERNAME} --password ${OS_PASSWORD} --tenant ${OS_PROJECT_NAME} \
                    --auth_url ${OS_AUTH_URL} --account_type openstack --description vim \
-                   --config "{management_network_name: ${VIM_MGMT_NET}}" || true
+                   --config "{management_network_name: ${VIM_MGMT_NET}, dataplane_physical_net: ${DATAPLANE:-physnet2}}" || true
+    STATUS="PROCESSING"
+    i=0
+    while [[ ${STATUS} != "ENABLED" ]]
+    do
+        ((i++))
+        if [[ $i -eq 5 ]]; then
+            echo "VIM stuck in PROCESSING after 100 seconds"
+            exit 1
+        fi
+        sleep 20
+        STATUS=`osm vim-list --long | grep ${VIM_TARGET} | awk '{print $9}'`
+    done
 }
 
 PARAMS=""
