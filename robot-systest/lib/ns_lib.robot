@@ -23,12 +23,13 @@ ${vnf_scale_pol_time}   30sec
 
 *** Keywords ***
 Create Network Service
-    [Arguments]   ${nsd}   ${vim_name}   ${ns_name}   ${ns_config}   ${publickey}   ${ns_launch_max_wait_time}=5min
+    [Arguments]   ${nsd}   ${vim_name}   ${ns_name}   ${ns_config}   ${publickey}  ${ns_launch_max_wait_time}=5min  ${config_file}=${EMPTY}
 
     ${config_attr}   Set Variable If   '${ns_config}'!='${EMPTY}'   --config '${ns_config}'   \
     ${sshkeys_attr}   Set Variable If   '${publickey}'!='${EMPTY}'   --ssh_keys ${publickey}   \
+    ${config_file_attr}   Set Variable If   '${config_file}'!='${EMPTY}'   --config_file '${config_file}'   \
 
-    ${ns_id}=   Instantiate Network Service   ${ns_name}   ${nsd}   ${vim_name}   ${config_attr} ${sshkeys_attr}
+    ${ns_id}=   Instantiate Network Service   ${ns_name}   ${nsd}   ${vim_name}   ${config_attr} ${sshkeys_attr} ${config_file_attr}
     log   ${ns_id}
 
     WAIT UNTIL KEYWORD SUCCEEDS   ${ns_launch_max_wait_time}   ${ns_launch_pol_time}   Check For NS Instance To Configured   ${ns_name}

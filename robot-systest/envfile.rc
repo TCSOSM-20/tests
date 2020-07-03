@@ -18,3 +18,9 @@ echo "Please set your environment variables."
 # export PACKAGES_FOLDER=<PACKAGES_FOLDER=>
 # export ROBOT_DEVOPS_FOLDER=<ROBOT_DEVOPS_FOLDER>
 # export ROBOT_REPORT_FOLDER=<ROBOT_REPORT_FOLDER>
+# K8s_01 variables - Installation of a K8s cluster from a NS
+# export IP_VM1=<JUJU_MACHINE1_IP>
+# export IP_VM2=<JUJU_MACHINE2_IP>
+# export IP_VM3=<JUJU_MACHINE3_IP>
+# export IP_VM4=<JUJU_MACHINE4_IP>
+# export IP_JUJU=<JUJU_CONTROLLER_IP>

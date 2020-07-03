@@ -1,0 +1,55 @@
+# Copyright 2020 Canonical Ltd.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+#     Unless required by applicable law or agreed to in writing, software
+#     distributed under the License is distributed on an "AS IS" BASIS,
+#     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#     See the License for the specific language governing permissions and
+#     limitations under the License.
+
+---
+additionalParamsForVnf:
+  -
+    member-vnf-index: k8s_juju
+    additionalParams:
+        MACHINE1: "{{ IP_VM1 }}"
+        MACHINE2: "{{ IP_VM2 }}"
+        MACHINE3: "{{ IP_VM3 }}"
+        MACHINE4: "{{ IP_VM4 }}"
+        MACHINE5: ""
+        MACHINE6: ""
+        MACHINE7: ""
+        MACHINE8: ""
+        MACHINE9: ""
+        MACHINE10: ""
+        BUNDLE: ""
+vld:
+  -
+    name: mgmtnet
+    vim-network-name: {{ NETWORK }}              #The network in the VIM to connect all nodes of the clusters
+    vnfd-connection-point-ref:
+      -
+        ip-address: "{{ IP_VM1 }}"
+        member-vnf-index-ref: k8s_vnf1
+        vnfd-connection-point-ref: mgmt
+      -
+        ip-address: "{{ IP_VM2 }}"
+        member-vnf-index-ref: k8s_vnf2
+        vnfd-connection-point-ref: mgmt
+      -
+        ip-address: "{{ IP_VM3 }}"
+        member-vnf-index-ref: k8s_vnf3
+        vnfd-connection-point-ref: mgmt
+      -
+        ip-address: "{{ IP_VM4 }}"
+        member-vnf-index-ref: k8s_vnf4
+        vnfd-connection-point-ref: mgmt
+      -
+        ip-address: "{{ IP_JUJU }}"
+        member-vnf-index-ref: k8s_juju
+        vnfd-connection-point-ref: mgmt
