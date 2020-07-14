@@ -13,6 +13,7 @@
 echo "Please set your environment variables."
 # export OSM_HOSTNAME=<OSM_HOSTNAME>
 # export OS_CLOUD=<OS_CLOUD>
+# export OS_SDNC=<OS_SDNC>
 # export VIM_TARGET=<VIM_TARGET>
 # export VIM_MGMT_NET=<VIM_MGMT_NET>
 # export PACKAGES_FOLDER=<PACKAGES_FOLDER=>

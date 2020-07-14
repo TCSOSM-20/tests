@@ -58,6 +58,8 @@ envfile.rc
 
    # Clouds file datacenter
    OS_CLOUD=<datacenter_in_clouds_file>
+   # SDNCs file
+   OS_SDNC=<SDN_controller_in_sdncs_file>
 
    # K8S config file
    K8S_CREDENTIALS=<path_to_kubeconfig>
@@ -99,12 +101,14 @@ Volumes:
 
 * <path_to_reports> [OPTIONAL]: It is the absolute path to reports location in the host
 * <path_to_clouds.yaml> [OPTIONAL]: It is the absolute path to the clouds.yaml file in the host
+* <path_to_sdncs.yaml> [OPTIONAL]: It is the absolute path to the sdncs.yaml file in the host
 * <path_to_kubeconfig> [OPTIONAL]: It is the kubeconfig file to be used for k8s clusters
 
 ```bash
    docker run --rm=true -t osmtests --env-file <env_file> \
        -v <path_to_reports>:/reports osmtests \
        -v <path_to_clouds.yaml>:/robot-systest/clouds.yaml \
+       -v <path_to_sdncs.yaml>:/robot-systest/sdncs.yaml \
        -v <path_to_kubeconfig>:/root/.kube/config \
        -o <osmclient_version> \
        -p <package_branch> \

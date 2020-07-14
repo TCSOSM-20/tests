@@ -9,27 +9,9 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-
-# Openstack Setup
-OS_USERNAME=
-OS_PASSWORD=
-OS_TENANT_NAME=
-OS_AUTH_URL=
-OS_TENANT_ID=
-
-# OSM Setup
-OSM_HOSTNAME=
-VIM_TARGET=
-VIM_MGMT_NET=
-
-# Robot setup
-ENVIRONMENTS_FOLDER=environments
-PACKAGES_FOLDER=/robot-systest/osm-packages
-
-# Clouds file datacenter
-OS_CLOUD=openstack
-# SDNCs file
-OS_SDNC=onos
-
-LC_ALL=C.UTF-8
-LANG=C.UTF-8
+sdncs:
+  onos:
+    auth:
+      url:
+      username:
+      password:
