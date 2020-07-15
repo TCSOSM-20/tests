@@ -54,6 +54,9 @@ create_vim(){
             sleep 10
             STATUS=`osm vim-list --long | grep ${VIM_TARGET} | awk '{print $9}'`
         done
+        if [[ ${STATUS} = "ENABLED" ]] ; then
+            break
+        fi
         ((attempts--))
     done
 
