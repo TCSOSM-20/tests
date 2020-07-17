@@ -37,34 +37,34 @@ ${password}   ${EMPTY}
 
 *** Test Cases ***
 Render a template
-    [Tags]   newK8sCluster   sanity   regression
+    [Tags]   newK8sCluster   regression
 
     ${stdout}=    Render template   %{ROBOT_DEVOPS_FOLDER}/resources/${template}  %{ROBOT_DEVOPS_FOLDER}/resources/${config_file}  IP_VM1=%{IP_VM1}  IP_VM2=%{IP_VM2}  IP_VM3=%{IP_VM3}  IP_VM4=%{IP_VM4}  IP_JUJU=%{IP_JUJU}  NETWORK=%{VIM_MGMT_NET}
     Log To Console  \n${stdout}
 
 Create Controller VNF Descriptor
-    [Tags]  newK8sCluster   sanity   regression
+    [Tags]  newK8sCluster   regression
 
     Create VNFD  '%{PACKAGES_FOLDER}/${vnfd_pkg1}'
 
 Create Machines VNF Descriptor
-    [Tags]  newK8sCluster   sanity   regression
+    [Tags]  newK8sCluster   regression
 
     Create VNFD  '%{PACKAGES_FOLDER}/${vnfd_pkg2}'
 
 Create K8s Cluster NS Descriptor
-    [Tags]  newK8sCluster   sanity   regression
+    [Tags]  newK8sCluster   regression
 
     Create NSD  '%{PACKAGES_FOLDER}/${nsd_pkg}'
 
 Instantiate K8s Cluster Network Service
-    [Tags]  newK8sCluster   sanity   regression
+    [Tags]  newK8sCluster   regression
 
     ${id}=  Create Network Service  ${nsd_name}  %{VIM_TARGET}  ${ns_name}  ns_config=${EMPTY}  publickey=${publickey}  ns_launch_max_wait_time=70min  config_file=%{ROBOT_DEVOPS_FOLDER}/resources/${config_file}  
     Set Suite Variable  ${ns_id}  ${id}
 
 Get Management Ip Addresses
-    [Tags]  newK8sCluster   sanity   regression
+    [Tags]  newK8sCluster   regression
 
     ${ip_addr_1}  Get Vnf Management Ip Address  ${ns_id}  ${vnf_member_index_1}
     log  ${ip_addr_1}
@@ -83,7 +83,7 @@ Get Management Ip Addresses
     Set Suite Variable  ${vnf_5_ip_addr}  ${ip_addr_5}
 
 Test SSH Access
-    [Tags]  newK8sCluster   sanity   regression
+    [Tags]  newK8sCluster   regression
 
     Variable Should Exist  ${vnf_1_ip_addr}  msg=IP address of the management VNF '${vnf_member_index_1}' is not available
     Variable Should Exist  ${vnf_2_ip_addr}  msg=IP address of the management VNF '${vnf_member_index_2}' is not available
@@ -98,29 +98,29 @@ Test SSH Access
     Test SSH Connection  ${vnf_5_ip_addr}  ${username}  ${password}  ${privatekey}
 
 Check kubeconfig file
-    [Tags]  newK8sCluster  sanity   regression
+    [Tags]  newK8sCluster   regression
 
     Check If remote File Exists  ${vnf_5_ip_addr}  ${username}  ${password}  ${privatekey}  ${kubeconfig_file}
 
 Delete NS Instance
-    [Tags]  newK8sCluster   sanity   regression   cleanup
+    [Tags]  newK8sCluster   regression   cleanup
 
     Delete NS  ${ns_name}
 
 
 Delete NS Descriptor
-    [Tags]  newK8sCluster   sanity   regression   cleanup
+    [Tags]  newK8sCluster   regression   cleanup
 
     Delete NSD  ${nsd_name}
 
 
 Delete Controller VNF Descriptor
-    [Tags]  newK8sCluster   sanity   regression   cleanup
+    [Tags]  newK8sCluster   regression   cleanup
 
     Delete VNFD  ${vnfd_name1}
 
 Delete Machines VNF Descriptor
-    [Tags]  newK8sCluster   sanity   regression   cleanup
+    [Tags]  newK8sCluster   regression   cleanup
 
     Delete VNFD  ${vnfd_name2}
 
