@@ -51,4 +51,6 @@ cp -R debian $PKG_DIR/.
 pushd $PKG_DIR
 dh_make -y --indep --createorig --a -c apache
 dpkg-buildpackage -uc -us -tc -rfakeroot
+RC=$?
 popd
+exit $RC
