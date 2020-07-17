@@ -13,7 +13,7 @@
 *** Variables ***
 ${success_return_code}   0
 ${ns_launch_pol_time}   30sec
-${ns_delete_max_wait_time}   1min
+${ns_delete_max_wait_time}   3min
 ${ns_delete_pol_time}   15sec
 ${ns_action_max_wait_time}   1min
 ${ns_action_pol_time}   15sec
