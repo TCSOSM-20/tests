@@ -41,9 +41,27 @@ Get VNFDs List
 
 
 Create VNFD
-    [Arguments]   ${vnfd_pkg}
+    [Documentation]   Onboards ("creates") a NF Package into OSM.
+    ...               - Parameters:
+    ...                 - vnfd_pkg: Name (and location) of the NF Package
+    ...                 - overrides (optional): String with options to override the EPA and/or interface properties of the Package.
+    ...                                        This is very useful to allow to deploy e.g. non-EPA packages in EPA VIMs (or vice-versa).
+    ...                                        Valid strings are the same as in the command. E.g.:
+    ...                                        - `--override-epa`: adds EPA attributes to all VDUs.
+    ...                                        - `--override-nonepa`: removes all EPA attributes from all VDUs.
+    ...                                        - `--override-paravirt`: converts all interfaces to `PARAVIRT`. This one can be combined with
+    ...                                           the others above (e.g. '--override-nonepa --override-paravirt').
+    ...               - Relevant environment variables:
+    ...                  - OVERRIDES: If the environment variable "OVERRIDES" exists, it prevails over the value in the argument.
+    ...                               This is often more convenient to enforce the same behaviour for every test run in a given VIM.
 
-    ${rc}   ${stdout}=   Run and Return RC and Output   osm vnfd-create ${vnfd_pkg}
+    [Arguments]   ${vnfd_pkg}   ${overrides}=${EMPTY}
+
+    # If env variable "OVERRIDES" exists, it prevails over the value in the argument
+    ${overrides}=   Get Environment Variable    OVERRIDES   default=${overrides}
+
+    # Proceedes with the onboarding with the appropriate arguments
+    ${rc}   ${stdout}=   Run and Return RC and Output   osm vnfd-create ${overrides} ${vnfd_pkg}
     log   ${stdout}
     Should Be Equal As Integers   ${rc}   ${success_return_code}
     ${lines}=  Get Line Count  ${stdout}
