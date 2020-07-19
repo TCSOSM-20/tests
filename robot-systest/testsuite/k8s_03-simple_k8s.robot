@@ -74,5 +74,4 @@ Test Cleanup
     Run Keyword If Test Failed  Delete NS   ${ns_name}
     Run Keyword If Test Failed  Delete NSD   ${nsd_name}
     Run Keyword If Test Failed  Delete VNFD   ${vnfd_name}
-
-
+    Run Keyword If Test Failed  Delete K8s Cluster   ${k8scluster_name}
