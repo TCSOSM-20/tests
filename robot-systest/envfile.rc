@@ -25,3 +25,4 @@ echo "Please set your environment variables."
 # export IP_VM3=<JUJU_MACHINE3_IP>
 # export IP_VM4=<JUJU_MACHINE4_IP>
 # export IP_JUJU=<JUJU_CONTROLLER_IP>
+# export JUJU_PASSWORD=<OSM_JUJU_PASSWORD> # Could be found in ~/.local/share/juju/accounts.yaml file
