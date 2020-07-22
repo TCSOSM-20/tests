@@ -15,6 +15,16 @@ ${success_return_code}   0
 
 
 *** Keywords ***
+Create Project
+    [Arguments]   ${project_name}
+
+    Should Not Be Empty   ${project_name}
+    ${rc}   ${stdout}=   Run and Return RC and Output   osm project-create ${project_name}
+    Log   ${stdout}
+    Should Be Equal As Integers   ${rc}   ${success_return_code}
+    [Return]  ${stdout}
+
+
 Create Project With Quotas
     [Arguments]   ${project_name}   ${project_quotas}
 
