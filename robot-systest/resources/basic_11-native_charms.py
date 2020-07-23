@@ -15,13 +15,13 @@ from pathlib import Path
 # Get ${HOME} from local machine
 home = str(Path.home())
 # NS and VNF descriptor package folder
-vnfd_pkg = 'charm-packages/ha_proxy_charm_vnf'
-nsd_pkg = 'charm-packages/ha_proxy_charm_ns'
+vnfd_pkg = 'charm-packages/native_charm_vnf'
+nsd_pkg = 'charm-packages/native_charm_ns'
 # NS and VNF descriptor id
-vnfd_name = 'ha_proxy_charm-vnf'
-nsd_name = 'ha_proxy_charm-ns'
+vnfd_name = 'native_charm-vnf'
+nsd_name = 'native_charm-ns'
 # NS instance name
-ns_name = 'basic_06_charm_test'
+ns_name = 'basic_11_native_charms'
 # SSH keys to be used
 publickey = home + '/.ssh/id_rsa.pub'
 privatekey = home + '/.ssh/id_rsa'
