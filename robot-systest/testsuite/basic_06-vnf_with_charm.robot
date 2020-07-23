@@ -41,26 +41,26 @@ ${ns_timeout}   15min
 
 *** Test Cases ***
 Create Charm VNF Descriptor
-    [Tags]   charm   sanity   regression
+    [Tags]   proxy_charm   charm   sanity   regression
 
     Create VNFD  '%{PACKAGES_FOLDER}/${vnfd_pkg}'
 
 
 Create Charm NS Descriptor
-    [Tags]   charm   sanity   regression
+    [Tags]   proxy_charm   charm   sanity   regression
 
     Create NSD  '%{PACKAGES_FOLDER}/${nsd_pkg}'
 
 
 Instantiate Charm Network Service
-    [Tags]   charm   sanity   regression
+    [Tags]   proxy_charm   charm   sanity   regression
 
     ${id}=  Create Network Service  ${nsd_name}  %{VIM_TARGET}  ${ns_name}  ${ns_config}  ${publickey}  ${ns_timeout}
     Set Suite Variable  ${ns_id}  ${id}
 
 
 Get Management Ip Addresses
-    [Tags]   charm   sanity   regression
+    [Tags]   proxy_charm   charm   sanity   regression
 
     ${ip_addr_1}  Get Vnf Management Ip Address  ${ns_id}  ${vnf_member_index_1}
     log  ${ip_addr_1}
@@ -71,7 +71,7 @@ Get Management Ip Addresses
 
 
 Test SSH Access
-    [Tags]   charm   sanity   regression
+    [Tags]   proxy_charm   charm   sanity   regression
 
     Variable Should Exist  ${vnf_1_ip_addr}  msg=IP address of the management VNF '${vnf_member_index_1}' is not available
     Variable Should Exist  ${vnf_2_ip_addr}  msg=IP address of the management VNF '${vnf_member_index_2}' is not available
@@ -83,7 +83,7 @@ Test SSH Access
 Check Remote Files Created Via Day 1 Operations
     [Documentation]     The Charm VNF has a Day 1 operation that creates a file named ${day_1_file_name}.
     ...                 This test checks whether that files have been created or not.
-    [Tags]   charm   sanity   regression
+    [Tags]   proxy_charm   charm   sanity   regression
 
     Check If remote File Exists  ${vnf_1_ip_addr}  ${username}  ${password}  ${privatekey}  ${day_1_file_name}
     Check If remote File Exists  ${vnf_2_ip_addr}  ${username}  ${password}  ${privatekey}  ${day_1_file_name}
@@ -91,7 +91,7 @@ Check Remote Files Created Via Day 1 Operations
 
 Execute Day 2 Operations
     [Documentation]     Performs one Day 2 operation per VNF that creates a new file.
-    [Tags]   charm   sanity   regression
+    [Tags]   proxy_charm   charm   sanity   regression
 
     Variable Should Exist  ${ns_id}  msg=Network service instance is not available
     ${ns_op_id_1}=  Execute NS Action  ${ns_name}  ${action_name}  ${vnf_member_index_1}  filename=${day_2_file_name_1}
@@ -100,26 +100,26 @@ Execute Day 2 Operations
 
 Check Remote Files Created Via Day 2 Operations
     [Documentation]     Check whether the files created in the previous test via Day 2 operations exist or not.
-    [Tags]   charm   sanity   regression
+    [Tags]   proxy_charm   charm   sanity   regression
 
     Check If remote File Exists  ${vnf_1_ip_addr}  ${username}  ${password}  ${privatekey}  ${day_2_file_name_1}
     Check If remote File Exists  ${vnf_2_ip_addr}  ${username}  ${password}  ${privatekey}  ${day_2_file_name_2}
 
 
 Delete NS Instance
-    [Tags]   charm   sanity   regression  cleanup
+    [Tags]   proxy_charm   charm   sanity   regression  cleanup
 
     Delete NS  ${ns_name}
 
 
 Delete NS Descriptor
-    [Tags]   charm   sanity   regression  cleanup
+    [Tags]   proxy_charm   charm   sanity   regression  cleanup
 
     Delete NSD  ${nsd_name}
 
 
 Delete VNF Descriptor
-    [Tags]   charm   sanity   regression  cleanup
+    [Tags]   proxy_charm   charm   sanity   regression  cleanup
 
     Delete VNFD  ${vnfd_name}
 

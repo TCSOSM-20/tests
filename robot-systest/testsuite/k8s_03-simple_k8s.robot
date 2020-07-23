@@ -35,36 +35,36 @@ ${publickey}   ${EMPTY}
 
 *** Test Cases ***
 Create Simple K8s VNF Descriptor
-    [Tags]   simple_k8s   sanity   regression
+    [Tags]   simple_k8s   charm   sanity   regression
     Create VNFD   '%{PACKAGES_FOLDER}/${vnfd_pkg}'
 
 Create Simple K8s Descriptor
-    [Tags]   simple_k8s   sanity   regression
+    [Tags]   simple_k8s   charm   sanity   regression
     Create NSD   '%{PACKAGES_FOLDER}/${nsd_pkg}'
 
 Add K8s Cluster To OSM
-    [Tags]   k8scluster   sanity   regression
+    [Tags]   k8scluster   charm   sanity   regression
     Create K8s Cluster  %{K8S_CREDENTIALS}  ${k8scluster_version}  %{VIM_TARGET}  %{VIM_MGMT_NET}  ${k8scluster_name}
 
 Network Service K8s Instance Test
-    [Tags]   simple_k8s   sanity   regression
+    [Tags]   simple_k8s   charm   sanity   regression
     ${id}=   Create Network Service   ${nsd_name}   %{VIM_TARGET}   ${ns_name}   ${ns_config}  ${publickey}
     Set Suite Variable   ${ns_id}   ${id}
 
 Delete NS K8s Instance Test
-    [Tags]   simple_k8s   sanity   regression   cleanup
+    [Tags]   simple_k8s   charm   sanity   regression   cleanup
     Delete NS   ${ns_name}
 
 Remove K8s Cluster from OSM
-    [Tags]   k8scluster   sanity   regression
+    [Tags]   k8scluster   charm   sanity   regression
     Delete K8s Cluster  ${k8scluster_name}
 
 Delete NS Descriptor Test
-    [Tags]   simple_k8s   sanity   regression   cleanup
+    [Tags]   simple_k8s   charm   sanity   regression   cleanup
     Delete NSD   ${nsd_name}
 
 Delete VNF Descriptor Test
-    [Tags]   simple_k8s   sanity   regression   cleanup
+    [Tags]   simple_k8s   charm   sanity   regression   cleanup
     Delete VNFD   ${vnfd_name}
 
 
