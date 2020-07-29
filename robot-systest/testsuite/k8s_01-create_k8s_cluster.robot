@@ -130,7 +130,5 @@ Test Cleanup
     [Documentation]  Test Suite Cleanup: Deleting descriptors and NS instance
 
     Run Keyword If Test Failed  Delete NS  ${ns_name}
-
     Run Keyword If Test Failed  Delete NSD  ${nsd_name}
-
     Run Keyword If Test Failed  Delete VNFD  ${vnfd_name}

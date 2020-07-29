@@ -1,3 +1,5 @@
+#   Copyright 2020 Canonical Ltd.
+#
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
 #   You may obtain a copy of the License at
@@ -43,7 +45,7 @@ Create Simple K8s Descriptor
     Create NSD   '%{PACKAGES_FOLDER}/${nsd_pkg}'
 
 Add K8s Cluster To OSM
-    [Tags]   k8scluster   charm   sanity   regression
+    [Tags]   simple_k8s   charm   sanity   regression
     Create K8s Cluster  %{K8S_CREDENTIALS}  ${k8scluster_version}  %{VIM_TARGET}  %{VIM_MGMT_NET}  ${k8scluster_name}
 
 Network Service K8s Instance Test
@@ -56,7 +58,7 @@ Delete NS K8s Instance Test
     Delete NS   ${ns_name}
 
 Remove K8s Cluster from OSM
-    [Tags]   k8scluster   charm   sanity   regression
+    [Tags]   simple_k8s   charm   sanity   regression
     Delete K8s Cluster  ${k8scluster_name}
 
 Delete NS Descriptor Test
@@ -74,5 +76,4 @@ Test Cleanup
     Run Keyword If Test Failed  Delete NS   ${ns_name}
     Run Keyword If Test Failed  Delete NSD   ${nsd_name}
     Run Keyword If Test Failed  Delete VNFD   ${vnfd_name}
-
-
+    Run Keyword If Test Failed  Delete K8s Cluster   ${k8scluster_name}

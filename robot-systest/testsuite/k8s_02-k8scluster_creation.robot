@@ -29,11 +29,6 @@ Add K8s Cluster To OSM
     [Tags]   k8scluster   sanity   regression
     Create K8s Cluster  %{K8S_CREDENTIALS}  ${k8scluster_version}  %{VIM_TARGET}  %{VIM_MGMT_NET}  ${k8scluster_name}
 
-List K8s Clusters
-    [Tags]   k8scluster   sanity   regression
-    ${stdout}=    Get K8s Cluster
-    Log To Console  \n${stdout}
-
 Remove K8s Cluster from OSM
     [Tags]   k8scluster   sanity   regression
     Delete K8s Cluster  ${k8scluster_name}
