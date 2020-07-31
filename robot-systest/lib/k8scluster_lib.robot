@@ -14,7 +14,7 @@
 
 *** Variables ***
 ${success_return_code}   0
-${k8scluster_launch_max_wait_time}   2min
+${k8scluster_launch_max_wait_time}   5min
 ${k8scluster_launch_pol_time}   30sec
 ${k8scluster_delete_max_wait_time}   2min
 ${k8scluster_delete_pol_time}   15sec

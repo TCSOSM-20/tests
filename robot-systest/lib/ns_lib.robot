@@ -152,6 +152,31 @@ Execute NS Action
     [Return]  ${stdout}
 
 
+Execute NS K8s Action
+    [Documentation]     Execute an action over the desired K8s NS.
+    ...                 Parameters are given to this function in key=value format (one argument per key/value pair).
+    ...                 Return the ID of the operation associated to the executed action.
+    ...                 Examples of execution:
+    ...                     \${ns_op_id}=  Execute NS Action  \${ns_name}  \${ns_action}  \${vnf_member_index}
+    ...                     \${ns_op_id}=  Execute NS Action  \${ns_name}  \${ns_action}  \${vnf_member_index}  \${param1}=\${value1}  \${param2}=\${value2}
+
+    [Arguments]  ${ns_name}  ${ns_action}  ${vnf_member_index}  ${kdu_name}  @{action_params}
+
+    ${params}=  Set Variable  ${EMPTY}
+    FOR  ${param}  IN  @{action_params}
+        ${match}  ${param_name}  ${param_value} =  Should Match Regexp  ${param}  (.+)=(.+)  msg=Syntax error in parameters
+        ${params}=  Catenate  SEPARATOR=  ${params}  "${param_name}":"${param_value}",
+    END
+    ${osm_ns_action_command}=  Set Variable  osm ns-action --action_name ${ns_action} --vnf_name ${vnf_member_index} --kdu_name ${kdu_name}
+    ${osm_ns_action_command}=  Run Keyword If  '${params}'!='${EMPTY}'  Catenate  ${osm_ns_action_command}  --params '{${params}}'
+    ...  ELSE  Set Variable  ${osm_ns_action_command}
+    ${osm_ns_action_command}=  Catenate  ${osm_ns_action_command}  ${ns_name}
+    ${rc}  ${stdout}=  Run and Return RC and Output  ${osm_ns_action_command}
+    Should Be Equal As Integers  ${rc}  ${success_return_code}  msg=${stdout}  values=False
+    Wait Until Keyword Succeeds  ${ns_action_max_wait_time}  ${ns_action_pol_time}  Check For NS Operation Completed  ${stdout}
+    [Return]  ${stdout}
+
+
 Execute Manual VNF Scale
     [Documentation]     Execute a manual VNF Scale action.
     ...                 The parameter 'scale_type' must be SCALE_IN or SCALE_OUT.

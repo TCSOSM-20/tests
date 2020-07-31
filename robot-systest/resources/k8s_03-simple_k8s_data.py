@@ -18,13 +18,13 @@ home = str(Path.home())
 k8scluster_name = 'k8s-test'
 k8scluster_version = 'v1'
 # NS and VNF descriptor package files
-vnfd_pkg = 'hackfest_simple_k8s_vnf'
-nsd_pkg = 'hackfest_simple_k8s_ns'
+vnfd_pkg = 'charm-packages/native_k8s_charm_vnf'
+nsd_pkg = 'charm-packages/native_k8s_charm_ns'
 # NS and VNF descriptor package files
-vnfd_name = 'hackfest-simple-k8s-vnf'
-nsd_name = 'hackfest-simple-k8s-ns'
+vnfd_name = 'native_k8s_charm-vnf'
+nsd_name = 'native_k8s_charm-ns'
 # NS instance name
-ns_name = 'simple-k8s'
+ns_name = 'native-k8s'
 # SSH keys to be used
 publickey = home + '/.ssh/id_rsa.pub'
 privatekey = home + '/.ssh/id_rsa'
