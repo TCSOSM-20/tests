@@ -34,26 +34,26 @@ ${ns_config}   {vld: [ {name: mgmtnet, vim-network-name: %{VIM_MGMT_NET}} ] }
 
 *** Test Cases ***
 Create VNF Descriptor
-    [Tags]   vnf_indicators_snmp   sanity   regression
+    [Tags]   vnf_indicators_snmp   regression
 
     Create VNFD  '%{PACKAGES_FOLDER}/${vnfd_pkg}'
 
 
 Create NS Descriptor
-    [Tags]   vnf_indicators_snmp   sanity   regression
+    [Tags]   vnf_indicators_snmp   regression
 
     Create NSD  '%{PACKAGES_FOLDER}/${nsd_pkg}'
 
 
 Instantiate Network Service
-    [Tags]   vnf_indicators_snmp   sanity   regression
+    [Tags]   vnf_indicators_snmp   regression
 
     ${id}=  Create Network Service  ${nsd_name}  %{VIM_TARGET}  ${ns_name}  ${ns_config}  ${EMPTY}
     Set Suite Variable  ${ns_id}  ${id}
 
 
 Get VNF SNMP Metrics
-    [Tags]   vnf_indicators_snmp   sanity   regression
+    [Tags]   vnf_indicators_snmp   regression
 
     Variable Should Exist  ${prometheus_host}  msg=Prometheus address is not available
     Variable Should Exist  ${prometheus_port}  msg=Prometheus port is not available
@@ -66,19 +66,19 @@ Get VNF SNMP Metrics
 
 
 Delete NS Instance
-    [Tags]   vnf_indicators_snmp   sanity   regression  cleanup
+    [Tags]   vnf_indicators_snmp   regression  cleanup
 
     Delete NS  ${ns_name}
 
 
 Delete NS Descriptor
-    [Tags]   vnf_indicators_snmp   sanity   regression  cleanup
+    [Tags]   vnf_indicators_snmp   regression  cleanup
 
     Delete NSD  ${nsd_name}
 
 
 Delete VNF Descriptor
-    [Tags]   vnf_indicators_snmp   sanity   regression  cleanup
+    [Tags]   vnf_indicators_snmp   regression  cleanup
 
     Delete VNFD  ${vnfd_name}
 
