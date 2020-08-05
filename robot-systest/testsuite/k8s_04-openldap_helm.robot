@@ -43,7 +43,7 @@ Create Package For OpenLDAP NS
     Create NSD   '%{PACKAGES_FOLDER}/${nsd_pkg}'
 
 Add K8s Cluster To OSM
-    [Tags]   openldap k8scluster   sanity   regression
+    [Tags]   openldap   sanity   regression
     Create K8s Cluster  %{K8S_CREDENTIALS}  ${k8scluster_version}  %{VIM_TARGET}  %{VIM_MGMT_NET}  ${k8scluster_name}
 
 Create Network Service Instance
@@ -56,7 +56,7 @@ Delete Network Service Instance
     Delete NS   ${ns_name}
 
 Remove K8s Cluster from OSM
-    [Tags]   openldap k8scluster   sanity   regression
+    [Tags]   openldap   sanity   regression
     Delete K8s Cluster  ${k8scluster_name}
 
 Delete NS Descriptor Test
