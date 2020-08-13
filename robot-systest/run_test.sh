@@ -47,7 +47,7 @@ create_vim(){
             ((i++))
             if [[ $i -eq 5 ]]; then
                 echo "VIM stuck in PROCESSING after 50 seconds"
-                osm vim-delete ${VIM_TARGET}
+                osm vim-delete --force ${VIM_TARGET}
                 sleep 5
                 break
             fi
